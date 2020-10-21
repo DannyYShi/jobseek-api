@@ -3,20 +3,28 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
-const { NODE_ENV } = require("./config");
-const { CLIENT_ORIGIN } = require("./config");
+const { NODE_ENV, CLIENT_ORIGIN } = require("./config");
+
+const ListRouter = require("./lists/lists-router");
+const CardRouter = require("./cards/cards-router");
 
 const app = express();
 
+// Logging
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
 app.use(morgan(morganOption));
 app.use(helmet());
+app.use(cors({ origin: CLIENT_ORIGIN }));
 
 app.get("/", (req, res) => {
-  res.send("Hello, world!");
+  res.send("You've reached the jobseek API");
 });
 
+app.use("/api/lists", ListRouter);
+app.use("/api/cards", CardRouter);
+
+// Error handler
 app.use(function errorHandler(error, req, res, next) {
   let response;
   if (NODE_ENV === "production") {
@@ -27,7 +35,5 @@ app.use(function errorHandler(error, req, res, next) {
   }
   res.status(500).json(response);
 });
-
-app.use(cors({ origin: CLIENT_ORIGIN }));
 
 module.exports = app;
