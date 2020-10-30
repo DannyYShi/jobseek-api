@@ -11,7 +11,7 @@ const CardsService = {
     return db.raw(
       `
     SELECT
-      c.card_id, c.company_name, c.position_applied
+      c.card_id, c.company_name, c.position_applied, c.job_location, c.job_url, c.job_description
     FROM
       cards c
     JOIN
