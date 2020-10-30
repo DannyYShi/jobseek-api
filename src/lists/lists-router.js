@@ -22,7 +22,8 @@ ListRouter.route("/").get((req, res, next) => {
             // finalList = finalList.concat(result);
             finalList = [...finalList, ...result];
 
-            if (list_id === lists.length) {
+            if (finalList.length === lists.length) {
+              finalList.sort((a, b) => a.list_id - b.list_id)
               res.json(finalList);
             }
           })
@@ -37,12 +38,10 @@ ListRouter.route("/").get((req, res, next) => {
 
 // Route to handle updating the list
 /* 
-
 Needs to be able to handle: 
 1. When a new card is inserted into a list 
 2. When a card is moved to a new list 
 3. When the cards in a list are reordered
-
 */
 
 ListRouter.route("/:list_id").patch(jsonBodyParser, (req, res, next) => {
