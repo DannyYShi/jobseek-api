@@ -1,27 +1,79 @@
-# Express Boilerplate!
+# Jobseek (server)
 
-This is a boilerplate project used for starting new projects!
+This is the backend code for Jobseek, a job application tracking dashboard that allows users to create and track the basic details and status of various job applications. 
 
-## Set up
+Link to Live App: https://jobseek.vercel.app/
+Link to Client Repo: https://github.com/danny-shi/jobseek
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+## API Documentation
+### Lists Endpoints 
+### ▸ `GET /api/lists`
+Returns an array of all the lists, along with the array of cards associated with each list with all of the basic details attached to it. 
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+**Example**
+```JSON
+[
+    {
+        "list_id": 1,
+        "list_name": "Wishlist",
+        "cards": [
+            {
+                "card_id": 2,
+                "company_name": "Uber",
+                "position_applied": "Driver",
+                "job_location": "San Francisco",
+                "job_url": "www.uber.com/careers",
+                "job_description": "This is another example"
+            },
+            {
+                "card_id": 27,
+                "company_name": "Facebook",
+                "position_applied": "Software Engineer",
+                "job_location": null,
+                "job_url": null,
+                "job_description": null
+            }
+        ]
+    },
+    {
+        "list_id": 2,
+        "list_name": "Applied",
+        "cards": [
+            {
+                "card_id": 23,
+                "company_name": "Google",
+                "position_applied": "Googler",
+                "job_location": null,
+                "job_url": null,
+                "job_description": null
+            }
+        ]
+    },
+    {
+        "list_id": 3,
+        "list_name": "Interview",
+        "cards": []
+    },
+    {
+        "list_id": 4,
+        "list_name": "Offer",
+        "cards": []
+    },
+    {
+        "list_id": 5,
+        "list_name": "Rejected",
+        "cards": []
+    }
+]
+```
 
-## Scripts
+### Cards Endpoints
 
-Start the application `npm start`
+## Technology Stack
 
-Start nodemon for the application `npm run dev`
-
-Run the tests `npm test`
-
-## Deploying
-
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
-# jobseek-api
+* **Express** for handling API requests
+* **Node** for interacting with the file system
+* **PostgreSQL** for the database 
+* **Knex.js** for interfacing with the **PostgreSQL** database
+* **Postgrator** for database migration
+* **Heroku** for deploying the database
