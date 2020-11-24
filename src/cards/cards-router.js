@@ -28,10 +28,11 @@ CardRouter.route("/:list_id").get((req, res, next) => {
 
 // Route to create new cards
 CardRouter.route("/").post(jsonBodyParser, (req, res, next) => {
+  console.log(1)
   if (!req.body) {
     return res.status(400).json({ Error: `Missing request body` });
   }
-
+  console.log(2)
   // Validate that necessary values are being sent by the client
   for (let prop of ["company_name", "position_applied", "list_id"]) {
     if (req.body[prop] === undefined) {
@@ -40,18 +41,20 @@ CardRouter.route("/").post(jsonBodyParser, (req, res, next) => {
         .json({ Error: `Missing '${prop}' property on request body` });
     }
   }
+  console.log(3)
   const { list_id, company_name, position_applied } = req.body;
   const newCard = {
     list_id,
     company_name: xss(company_name),
     position_applied: xss(position_applied),
   };
-
+  console.log(4)
   CardsService.insertCard(req.app.get("db"), newCard)
     .then((dbCard) => {
       res.status(201).json(dbCard);
     })
-    .catch(next);
+    .catch(err => { throw new Error(err) });
+  console.log(5)
 });
 
 // Route to update and delete cards
